@@ -2,8 +2,10 @@
 import React from 'react'
 import { motion } from 'motion/react'
 import { Button } from '../ui/button'
-import { Facebook, Instagram, Leaf, Linkedin, Mail, Twitter } from 'lucide-react'
 import { Input } from '../ui/input'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebook, faTwitter, faLinkedin, faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faLeaf, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 const Footer = () => {
     return (
@@ -19,7 +21,7 @@ const Footer = () => {
                         className="space-y-4"
                     >
                         <div className="flex items-center space-x-2">
-                            <Leaf className="h-8 w-8 text-sidebar-accent" />
+                            <FontAwesomeIcon icon={faLeaf} className="h-8 w-8 text-sidebar-accent" />
                             <span className="text-xl font-bold text-sidebar-foreground">AgriConnect</span>
                         </div>
                         <p className="text-sidebar-foreground/80 text-sm leading-relaxed">
@@ -27,14 +29,19 @@ const Footer = () => {
                             knowledge and community.
                         </p>
                         <div className="flex space-x-4">
-                            {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
+                            {[
+                                { icon: faFacebook, href: "#" },
+                                { icon: faTwitter, href: "#" },
+                                { icon: faInstagram, href: "#" },
+                                { icon: faLinkedin, href: "#" }
+                            ].map((item, index) => (
                                 <motion.a
                                     key={index}
-                                    href="#"
+                                    href={item.href}
                                     whileHover={{ scale: 1.1, y: -2 }}
                                     className="text-sidebar-foreground/60 hover:text-sidebar-accent transition-colors"
                                 >
-                                    <Icon className="h-5 w-5" />
+                                    <FontAwesomeIcon icon={item.icon} className="h-10 w-10" />
                                 </motion.a>
                             ))}
                         </div>
@@ -108,10 +115,14 @@ const Footer = () => {
                                 Get the latest agricultural insights and community updates.
                             </p>
                             <div className="space-y-2">
-                                <Input type="email" placeholder="Enter your email" className="bg-background border-sidebar-border" />
-                                <Button className="w-full" size="sm">
+                                <Input type="email" placeholder="Enter your email" className="bg-background border-sidebar-border" style={{ outline: 'none', boxShadow: 'none' }}
+                                onFocus={(e) => {
+                                    e.currentTarget.style.outline = 'none'
+                                    e.currentTarget.style.boxShadow = 'none'
+                                }} />
+                                <Button className="w-full cursor-pointer" size="sm">
                                     <motion.span whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
-                                        <Mail className="h-4 w-4 mr-2" />
+                                        <FontAwesomeIcon icon={faEnvelope} className="h-4 w-4 mr-2" />
                                     </motion.span>
                                     Subscribe
                                 </Button>
@@ -130,7 +141,6 @@ const Footer = () => {
                         </p>
                     </motion.div>
                 </div>
-
             </footer>
         </>
     )
