@@ -70,7 +70,7 @@ export default function Contact() {
                 icon={faEnvelope}
                 className="h-6 w-6 text-amber-700"
               />
-              <span className="text-gray-700">support@agriconnect.com</span>
+              <span className="text-gray-700">support@Krishikalp.com</span>
             </motion.div>
 
             <motion.div

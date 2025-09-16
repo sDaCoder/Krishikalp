@@ -22,7 +22,7 @@ const Footer = () => {
                     >
                         <div className="flex items-center space-x-2">
                             <FontAwesomeIcon icon={faLeaf} className="h-8 w-8 text-sidebar-accent" />
-                            <span className="text-xl font-bold text-sidebar-foreground">AgriConnect</span>
+                            <span className="text-xl font-bold text-sidebar-foreground">Krishikalp</span>
                         </div>
                         <p className="text-sidebar-foreground/80 text-sm leading-relaxed">
                             Connecting farmers and agricultural professionals worldwide to build a sustainable future through shared
@@ -137,7 +137,7 @@ const Footer = () => {
                         className="border-t border-sidebar-border mt-12 pt-8 text-center"
                     >
                         <p className="text-sidebar-foreground/60 text-sm">
-                            © 2025 AgriConnect. All rights reserved. Built with passion for sustainable agriculture.
+                            © 2025 Krishikalp. All rights reserved. Built with passion for sustainable agriculture.
                         </p>
                     </motion.div>
                 </div>

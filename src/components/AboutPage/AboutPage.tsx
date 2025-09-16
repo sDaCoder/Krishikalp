@@ -16,12 +16,12 @@ export default function About() {
         {/* Heading */}
         <h1 className="text-3xl md:text-5xl font-bold text-green-700 mb-6 flex items-center justify-center gap-2 md:gap-3">
           <FontAwesomeIcon icon={faLeaf} className="h-7 w-7 md:h-8 md:w-8 text-[#bff542]" />
-          <span className="whitespace-nowrap text-[#f5aa42]">About AgriConnect</span>
+          <span className="whitespace-nowrap text-[#f5aa42]">About Krishikalp</span>
         </h1>
 
         {/* Paragraph */}
         <p className="text-lg text-[#8b5c2a] leading-relaxed mb-8">
-          <span className="font-semibold text-[#8b5c2a]">AgriConnect</span> is a
+          <span className="font-semibold text-[#8b5c2a]">Krishikalp</span> is a
           smart agriculture and weather platform designed to help farmers and
           communities make informed decisions. Our goal is to provide real-time
           weather updates, crop recommendations, irrigation insights, and

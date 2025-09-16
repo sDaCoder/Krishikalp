@@ -23,7 +23,7 @@ export default function LoginForm() {
       <div className="bg-white/20 backdrop-blur-sm rounded-lg shadow-xl p-8 border border-white/80">
         <div className="flex items-center justify-center gap-2 mb-6">
           <FontAwesomeIcon icon={faLeaf} className="h-16 w-16" />
-          <span className="text-2xl font-bold">AgriConnect</span>
+          <span className="text-2xl font-bold">Krishikalp</span>
         </div>
 
         <Separator className="mb-6" />

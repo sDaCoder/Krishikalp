@@ -44,7 +44,7 @@ export default function SignupForm() {
         {/* Section 1: Logo and Brand Name */}
         <div className="flex items-center justify-center gap-2 mb-6">
           <FontAwesomeIcon icon={faLeaf} className="h-16 w-16" />
-          <span className="text-2xl font-bold">AgriConnect</span>
+          <span className="text-2xl font-bold">Krishikalp</span>
         </div>
 
         <Separator className="mb-6" />

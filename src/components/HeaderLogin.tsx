@@ -13,7 +13,7 @@ export default function Navbar() {
       <nav className="relative flex items-center justify-between px-8 py-4">
         <Link href="/" className="flex items-center gap-2 cursor-pointer">
           <FontAwesomeIcon icon={faLeaf} className="h-6 w-6 text-white" />
-          <span className="text-xl font-bold text-white">AgriConnect</span>
+          <span className="text-xl font-bold text-white">Krishikalp</span>
         </Link>
 
         <div className="flex items-center gap-6">

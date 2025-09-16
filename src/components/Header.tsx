@@ -26,7 +26,7 @@ const Header: React.FC = () => {
           className="flex items-center justify-center space-x-2 cursor-pointer"
         >
           <FontAwesomeIcon icon={faLeaf} className="h-8 w-8 text-primary-foreground" />
-          <span className="text-xl font-bold text-primary-foreground">AgriConnect</span>
+          <span className="text-xl font-bold text-primary-foreground">Krishikalp</span>
         </motion.div>
 
         {/* Navigation */}
