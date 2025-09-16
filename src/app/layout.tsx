@@ -5,6 +5,7 @@ import HeaderLogin from "@/components/HeaderLogin"
 import HeaderSignup from "@/components/HeaderSignup"
 import Footer from "@/components/Footer/Footer"
 import "./globals.css"
+import { Toaster } from "@/components/ui/sonner"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {header}
         {children}
         <Footer />
+        <Toaster />
       </body>
     </html>
   )

@@ -5,9 +5,12 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLeaf, faRightToBracket, faUserPlus } from "@fortawesome/free-solid-svg-icons"
+import { authClient } from "../../lib/auth-client"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
 const Header: React.FC = () => {
   const router = useRouter()
+  const signedIn = authClient.useSession().data?.user
 
   return (
     <>
@@ -26,7 +29,7 @@ const Header: React.FC = () => {
           className="flex items-center justify-center space-x-2 cursor-pointer"
         >
           <FontAwesomeIcon icon={faLeaf} className="h-8 w-8 text-primary-foreground" />
-          <span className="text-xl font-bold text-primary-foreground">Krishikalp</span>
+          <span className="text-xl font-bold text-primary-foreground">KrishiKalp</span>
         </motion.div>
 
         {/* Navigation */}
@@ -60,28 +63,42 @@ const Header: React.FC = () => {
           </motion.div>
         </motion.div>
 
+        {signedIn ? (
+          <>
+            <Avatar className="cursor-pointer" onClick={() => {
+              router.push("/dashboard")
+            }}>
+              <AvatarImage src={"https://i.pravatar.cc/150"} />
+              <AvatarFallback>JS</AvatarFallback>
+            </Avatar>
+          </>
+        ) : (
+          <>
+            <div className="hidden md:flex items-center space-x-2">
+              <Button
+                className="cursor-pointer flex items-center gap-2 rounded-2xl"
+                variant={"secondary"}
+                onClick={() => {
+                  router.push("/login")
+                }}
+              >
+                <FontAwesomeIcon icon={faRightToBracket} className="h-4 w-4" />
+                Log In
+              </Button>
+              <Button
+                className="cursor-pointer flex items-center gap-2 rounded-2xl"
+                onClick={() => {
+                  router.push("/signup")
+                }}
+              >
+                <FontAwesomeIcon icon={faUserPlus} className="h-4 w-4" />
+                Sign Up
+              </Button>
+            </div>
+          </>
+        )}
         {/* Auth Buttons */}
-        <div className="hidden md:flex items-center space-x-2">
-          <Button
-            className="cursor-pointer flex items-center gap-2 rounded-2xl"
-            variant={"secondary"}
-            onClick={() => {
-              router.push("/login")
-            }}
-          >
-            <FontAwesomeIcon icon={faRightToBracket} className="h-4 w-4" />
-            Log In
-          </Button>
-          <Button
-            className="cursor-pointer flex items-center gap-2 rounded-2xl"
-            onClick={() => {
-              router.push("/signup")
-            }}
-          >
-            <FontAwesomeIcon icon={faUserPlus} className="h-4 w-4" />
-            Sign Up
-          </Button>
-        </div>
+
       </motion.header>
     </>
   )

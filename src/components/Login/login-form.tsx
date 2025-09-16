@@ -7,15 +7,42 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+import { userLoginSchema } from "@/lib/validations/userSchema"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
+import { authClient } from "../../../lib/auth-client"
 
 export default function LoginForm() {
+  const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault()
     console.log("Login attempt:", { email, password })
+
+    const parsed = userLoginSchema.safeParse({ email, password })
+    if (!parsed.success) {
+      const firstError = parsed.error.issues[0]
+      toast.error(firstError?.message || "Please check your inputs")
+      return
+    }
+
+    try {
+      await authClient.signIn.email({
+        email,
+        password,
+      })
+      toast.success("Login successful!")
+      setEmail("")
+      setPassword("")
+      setShowPassword(false)
+      router.push("/")
+    } catch (error: any) {
+        const apiMessage = error?.response?.data?.message
+        toast.error(apiMessage || error?.message || "Login failed")
+    }
   }
 
   return (
@@ -23,7 +50,7 @@ export default function LoginForm() {
       <div className="bg-white/20 backdrop-blur-sm rounded-lg shadow-xl p-8 border border-white/80">
         <div className="flex items-center justify-center gap-2 mb-6">
           <FontAwesomeIcon icon={faLeaf} className="h-16 w-16" />
-          <span className="text-2xl font-bold">Krishikalp</span>
+          <span className="text-2xl font-bold">KrishiKalp</span>
         </div>
 
         <Separator className="mb-6" />
@@ -63,6 +90,7 @@ export default function LoginForm() {
                 required
               />
               <button
+                title="Show/Hide Password"
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
