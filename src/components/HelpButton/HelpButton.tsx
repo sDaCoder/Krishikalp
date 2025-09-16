@@ -1,6 +1,8 @@
 "use client"
 import { useState } from "react"
 import { usePathname } from "next/navigation"
+import { Button } from "../ui/button"
+import { MessageCircleQuestionMark } from "lucide-react"
 
 export default function HelpButton() {
   const [open, setOpen] = useState(false)
@@ -12,17 +14,19 @@ export default function HelpButton() {
   return (
     <>
       <div className="fixed bottom-6 right-6 z-50">
-        <button
+        <Button
           onClick={() => setOpen(true)}
-          className={`cursor-pointer text-white font-semibold py-2 px-3 rounded-3xl shadow-lg flex items-center justify-center 
+          className={`cursor-pointer text-white font-semibold py-2 px-6 rounded-3xl shadow-lg flex items-center justify-center 
             ${isAuthPage 
               ? "bg-green-500 hover:bg-green-600" 
-              : "bg-[#a16207]/60 hover:bg-[#ad6d10]/60 backdrop-blur"
+              : "backdrop-blur"
             }`}
         >
-          <span className="text-base">❓</span>
+          <span className="text-base">
+          <MessageCircleQuestionMark className="h-4 w-4"/>
+          </span>
           Help
-        </button>
+        </Button>
       </div>
 
       {open && (

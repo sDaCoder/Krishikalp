@@ -1,7 +1,6 @@
 "use client"
 import { useState } from "react"
 import type React from "react"
-
 import Link from "next/link"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
@@ -18,23 +17,45 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+import { toast } from "sonner"
+import { userSignupSchema } from "@/lib/validations/userSchema"
+import axios from "axios"
 
 export default function SignupForm() {
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [phone, setPhone] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [name, setName] = useState<string>("")
+  const [email, setEmail] = useState<string>("")
+  const [phone, setPhone] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const [confirmPassword, setConfirmPassword] = useState<string>("")
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (password !== confirmPassword) {
-      alert("Passwords do not match!")
+      toast.error("Passwords do not match!")
       return
     }
-    console.log("Signup attempt:", { name, email, phone, password })
+
+    const parsed = userSignupSchema.safeParse({ name, email, phone, password })
+    if (!parsed.success) {
+      const firstError = parsed.error.issues[0]
+      toast.error(firstError?.message || "Please check your inputs")
+      return
+    }
+
+    try {
+      const response = await axios.post("/api/user", {
+        name,
+        email,
+        phone,
+        password,
+      })
+      toast.success(response.data?.message || "Signup successful!")
+    } catch (error: any) {
+      const message = error?.response?.data?.message || "Signup failed"
+      toast.error(message)
+    }
   }
 
   return (
@@ -121,6 +142,7 @@ export default function SignupForm() {
                 required
               />
               <button
+                title="Show/Hide Password"
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
@@ -146,6 +168,7 @@ export default function SignupForm() {
                 required
               />
               <button
+                title="Show/Hide Password"
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
