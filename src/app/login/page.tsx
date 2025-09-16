@@ -1,7 +1,20 @@
 import LoginForm from "@/components/Login/login-form"
 import HelpButton from "@/components/HelpButton/HelpButton";
+import { auth } from "../../../lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function LoginPage() {
+export default async function page() {
+
+  const session = await auth.api.getSession({
+    headers: await headers()
+  })
+
+  console.log(session)
+  if(session){
+    return redirect("/dashboard")
+  }
+
   return (
     <div className="relative min-h-screen flex items-center justify-center">
       <video

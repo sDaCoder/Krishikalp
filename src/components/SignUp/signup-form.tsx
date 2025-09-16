@@ -19,9 +19,11 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { toast } from "sonner"
 import { userSignupSchema } from "@/lib/validations/userSchema"
-import axios from "axios"
+import { useRouter } from "next/navigation"
+import { authClient } from "../../../lib/auth-client"
 
 export default function SignupForm() {
+  const router = useRouter()
   const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [phone, setPhone] = useState<string>("")
@@ -45,16 +47,23 @@ export default function SignupForm() {
     }
 
     try {
-      const response = await axios.post("/api/user", {
+      await authClient.signUp.email({
         name,
         email,
-        phone,
         password,
       })
-      toast.success(response.data?.message || "Signup successful!")
+      toast.success("Signup successful!")
+      setName("")
+      setEmail("")
+      setPhone("")
+      setPassword("")
+      setConfirmPassword("")
+      setShowPassword(false)
+      setShowConfirmPassword(false)
+      router.push("/")
     } catch (error: any) {
-      const message = error?.response?.data?.message || "Signup failed"
-      toast.error(message)
+      const apiMessage = error?.response?.data?.message || "Signup failed"
+      toast.error(apiMessage || error?.message || "Signup failed")
     }
   }
 
@@ -65,7 +74,7 @@ export default function SignupForm() {
         {/* Section 1: Logo and Brand Name */}
         <div className="flex items-center justify-center gap-2 mb-6">
           <FontAwesomeIcon icon={faLeaf} className="h-16 w-16" />
-          <span className="text-2xl font-bold">Krishikalp</span>
+          <span className="text-2xl font-bold">KrishiKalp</span>
         </div>
 
         <Separator className="mb-6" />

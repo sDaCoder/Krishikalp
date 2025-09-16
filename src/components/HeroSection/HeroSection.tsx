@@ -1,11 +1,16 @@
 "use client"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { Button } from "@/components/ui/button"
-import BallCanvas from "@/components/ui/Ball" 
+import BallCanvas from "@/components/ui/Ball"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
+import { authClient } from "../../../lib/auth-client"
 
 const HeroSection = () => {
+
+  const signedIn = authClient.useSession().data?.user
+
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -32,7 +37,9 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-2xl md:text-4xl lg:text-6xl font-bold text-primary-foreground mb-6 text-center lg:whitespace-nowrap"
           >
-            Growing Together in Modern Agriculture
+            {
+              signedIn ? `Welcome back, ${signedIn.name}` : `Growing Together in Modern Agriculture`
+            }
           </motion.h1>
 
           <motion.p
