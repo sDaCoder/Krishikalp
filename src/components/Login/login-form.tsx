@@ -38,7 +38,7 @@ export default function LoginForm() {
       setEmail("")
       setPassword("")
       setShowPassword(false)
-      router.push("/")
+      router.push("/dashboard")
     } catch (error: any) {
         const apiMessage = error?.response?.data?.message
         toast.error(apiMessage || error?.message || "Login failed")

@@ -60,7 +60,7 @@ export default function SignupForm() {
       setConfirmPassword("")
       setShowPassword(false)
       setShowConfirmPassword(false)
-      router.push("/")
+      router.push("/dashboard")
     } catch (error: any) {
       const apiMessage = error?.response?.data?.message || "Signup failed"
       toast.error(apiMessage || error?.message || "Signup failed")
