@@ -30,7 +30,7 @@ function isAxiosLikeError(
     typeof err === "object" &&
     err !== null &&
     "response" in err &&
-    typeof (err as any).response === "object"
+    typeof (err).response === "object"
   )
 }
 

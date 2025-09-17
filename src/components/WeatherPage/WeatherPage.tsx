@@ -3,11 +3,26 @@ import { useState } from "react"
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts"
 import SearchPage from "@/components/WeatherPage/SearchPage"
 
+// Types for weather data used by this page
+interface WeatherDay {
+  date: string // ISO date string like "2025-09-17"
+  temp: number
+  tempMin: number
+  tempMax: number
+  humidity: number
+  weather: string // description, e.g., "clear sky"
+}
+
+interface WeatherInfo {
+  city: string
+  daily: WeatherDay[]
+}
+
 export default function WeatherPage() {
-  const [weatherInfo, setWeatherInfo] = useState<any>(null)
+  const [weatherInfo, setWeatherInfo] = useState<WeatherInfo | null>(null)
 
   // Prepare chart data
-  const chartData = weatherInfo?.daily?.map((day: any) => ({
+  const chartData = weatherInfo?.daily?.map((day: WeatherDay) => ({
     date: new Date(day.date).toLocaleDateString("en-US", { weekday: "short" }),
     temp: day.temp,
     tempMax: day.tempMax,
@@ -15,12 +30,12 @@ export default function WeatherPage() {
   })) || []
 
   // Function to generate sowing/harvesting advice
-  const getSowingHarvestAdvice = (weatherInfo: any) => {
+  const getSowingHarvestAdvice = (weatherInfo: WeatherInfo): string[] => {
     if (!weatherInfo || !weatherInfo.daily) return []
 
     const advice: string[] = []
 
-    weatherInfo.daily.forEach((day: any) => {
+    weatherInfo.daily.forEach((day: WeatherDay) => {
       const temp = day.temp
       const date = new Date(day.date).toLocaleDateString("en-US", {
         weekday: "short",
@@ -69,7 +84,7 @@ export default function WeatherPage() {
       {/* Weather cards on top */}
       {weatherInfo && (
         <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center", marginBottom: "2rem" }}>
-          {weatherInfo.daily.map((day: any, index: number) => (
+          {weatherInfo.daily.map((day: WeatherDay, index: number) => (
             
             <div
               key={index}

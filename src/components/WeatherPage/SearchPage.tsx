@@ -4,8 +4,35 @@ import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import SendIcon from "@mui/icons-material/Send"
 
+// Types aligned with WeatherPage usage
+interface WeatherDay {
+  date: string
+  temp: number
+  tempMin: number
+  tempMax: number
+  humidity: number
+  weather: string
+}
+
+interface WeatherInfo {
+  city: string
+  daily: WeatherDay[]
+}
+
+// Minimal subset of OpenWeather 5-day/3-hour forecast response we use
+interface OpenWeatherItem {
+  dt_txt: string
+  main: {
+    temp: number
+    temp_min: number
+    temp_max: number
+    humidity: number
+  }
+  weather: Array<{ description: string }>
+}
+
 interface SearchPageProps {
-  updateInfo: (info: any) => void
+  updateInfo: (info: WeatherInfo) => void
 }
 
 export default function SearchPage({ updateInfo }: SearchPageProps) {
@@ -36,21 +63,21 @@ export default function SearchPage({ updateInfo }: SearchPageProps) {
       }
 
       // Group forecast by date
-      const dailyForecast: Record<string, any[]> = {}
-      data.list.forEach((item: any) => {
+      const dailyForecast: Record<string, OpenWeatherItem[]> = {}
+      data.list.forEach((item: OpenWeatherItem) => {
         const date = item.dt_txt.split(" ")[0]
         if (!dailyForecast[date]) dailyForecast[date] = []
         dailyForecast[date].push(item)
       })
 
       // Pick one representative per day
-      const daily = Object.keys(dailyForecast).map((date) => {
+      const daily: WeatherDay[] = Object.keys(dailyForecast).map((date) => {
         const midday = dailyForecast[date][4] || dailyForecast[date][0]
         return {
           date,
           temp: midday.main.temp,
-          tempMin: Math.min(...dailyForecast[date].map((i: any) => i.main.temp_min)),
-          tempMax: Math.max(...dailyForecast[date].map((i: any) => i.main.temp_max)),
+          tempMin: Math.min(...dailyForecast[date].map((i: OpenWeatherItem) => i.main.temp_min)),
+          tempMax: Math.max(...dailyForecast[date].map((i: OpenWeatherItem) => i.main.temp_max)),
           humidity: midday.main.humidity,
           weather: midday.weather[0].description,
         }
