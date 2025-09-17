@@ -22,6 +22,18 @@ import { userSignupSchema } from "@/lib/validations/userSchema"
 import { useRouter } from "next/navigation"
 import { authClient } from "../../../lib/auth-client"
 
+// Narrowing helper to detect Axios-like errors without importing Axios types
+function isAxiosLikeError(
+  err: unknown
+): err is { response?: { data?: { message?: string } } } {
+  return (
+    typeof err === "object" &&
+    err !== null &&
+    "response" in err &&
+    typeof (err as any).response === "object"
+  )
+}
+
 export default function SignupForm() {
   const router = useRouter()
   const [name, setName] = useState<string>("")
@@ -61,9 +73,12 @@ export default function SignupForm() {
       setShowPassword(false)
       setShowConfirmPassword(false)
       router.push("/dashboard")
-    } catch (error: any) {
-      const apiMessage = error?.response?.data?.message || "Signup failed"
-      toast.error(apiMessage || error?.message || "Signup failed")
+    } catch (error: unknown) {
+      const apiMessage = isAxiosLikeError(error)
+        ? error.response?.data?.message
+        : undefined
+      const fallbackMessage = error instanceof Error ? error.message : undefined
+      toast.error(apiMessage || fallbackMessage || "Signup failed")
     }
   }
 

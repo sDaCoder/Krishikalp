@@ -12,6 +12,18 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { authClient } from "../../../lib/auth-client"
 
+// Narrowing helper to detect Axios-like errors without importing Axios types
+function isAxiosLikeError(
+  err: unknown
+): err is { response?: { data?: { message?: string } } } {
+  return (
+    typeof err === "object" &&
+    err !== null &&
+    "response" in err &&
+    typeof (err as any).response === "object"
+  )
+}
+
 export default function LoginForm() {
   const router = useRouter()
   const [email, setEmail] = useState("")
@@ -39,9 +51,12 @@ export default function LoginForm() {
       setPassword("")
       setShowPassword(false)
       router.push("/dashboard")
-    } catch (error: any) {
-        const apiMessage = error?.response?.data?.message
-        toast.error(apiMessage || error?.message || "Login failed")
+    } catch (error: unknown) {
+        const apiMessage = isAxiosLikeError(error)
+          ? error.response?.data?.message
+          : undefined
+        const fallbackMessage = error instanceof Error ? error.message : undefined
+        toast.error(apiMessage || fallbackMessage || "Login failed")
     }
   }
 

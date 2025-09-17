@@ -13,7 +13,6 @@ import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { SendHorizonal } from "lucide-react"
 import { Label } from "../ui/label"
 
 export default function Contact() {
