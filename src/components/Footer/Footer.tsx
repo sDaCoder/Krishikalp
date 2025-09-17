@@ -4,7 +4,7 @@ import { motion } from 'motion/react'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook, faTwitter, faLinkedin, faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faFacebook, faLinkedin, faInstagram, faSquareXTwitter } from '@fortawesome/free-brands-svg-icons'
 import { faLeaf, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 const Footer = () => {
@@ -31,7 +31,7 @@ const Footer = () => {
                         <div className="flex space-x-4">
                             {[
                                 { icon: faFacebook, href: "#" },
-                                { icon: faTwitter, href: "#" },
+                                { icon: faSquareXTwitter, href: "#" },
                                 { icon: faInstagram, href: "#" },
                                 { icon: faLinkedin, href: "#" }
                             ].map((item, index) => (
