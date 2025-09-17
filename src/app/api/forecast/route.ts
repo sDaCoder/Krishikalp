@@ -1,6 +1,14 @@
 // app/api/forecast/route.ts (App Router)
 import { NextRequest, NextResponse } from "next/server"
 
+// Minimal typing for OpenWeather One Call API daily item we use
+interface OneCallDailyItem {
+  dt: number
+  temp: { day: number; min: number; max: number }
+  humidity: number
+  weather: Array<{ description?: string }>
+}
+
 export async function GET(req: NextRequest) {
   const city = req.nextUrl.searchParams.get("city") || ""
   const API_KEY = process.env.NEXT_PUBLIC_WEATHER_KEY
@@ -29,13 +37,13 @@ export async function GET(req: NextRequest) {
     const forecastData = await forecastRes.json()
 
     // Shape the response to match components' expected structure
-    const daily = (forecastData?.daily || []).slice(0, 7).map((d: any) => {
+    const daily = (forecastData?.daily || []).slice(0, 7).map((d: OneCallDailyItem) => {
       const dateISO = new Date(d.dt * 1000).toISOString().slice(0, 10)
       return {
         date: dateISO,
-        temp: typeof d.temp === "object" && d.temp?.day != null ? d.temp.day : d.temp,
-        tempMin: typeof d.temp === "object" ? d.temp.min : d.tempMin,
-        tempMax: typeof d.temp === "object" ? d.temp.max : d.tempMax,
+        temp: d.temp.day,
+        tempMin: d.temp.min,
+        tempMax: d.temp.max,
         humidity: d.humidity,
         weather: Array.isArray(d.weather) && d.weather[0]?.description ? d.weather[0].description : "",
       }
