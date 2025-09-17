@@ -31,6 +31,13 @@ interface OpenWeatherItem {
   weather: Array<{ description: string }>
 }
 
+interface OpenWeatherResponse {
+  cod: string | number
+  message?: string
+  list: OpenWeatherItem[]
+  city: { name: string }
+}
+
 interface SearchPageProps {
   updateInfo: (info: WeatherInfo) => void
 }
@@ -55,7 +62,7 @@ export default function SearchPage({ updateInfo }: SearchPageProps) {
           city
         )}&units=metric&appid=${API_KEY}`
       )
-      const data = await res.json()
+      const data: OpenWeatherResponse = await res.json()
 
       if (data.cod !== "200" && data.cod !== 200) {
         setError(data.message || "City not found")
