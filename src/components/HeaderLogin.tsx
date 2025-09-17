@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLeaf, faUserPlus } from "@fortawesome/free-solid-svg-icons"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 
 export default function Navbar() {
   return (
