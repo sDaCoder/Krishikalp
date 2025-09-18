@@ -116,12 +116,12 @@ export default function LoginForm() {
           </div>
 
           <div className="flex justify-end">
-            <Link href="/forgot-password" className="text-sm text-green-500 hover:text-green-600 hover:underline">
+            <Link href="/forgot-password" className="text-sm text-yellow-500 hover:text-yellow-600 hover:underline">
               Forgot Password?
             </Link>
           </div>
 
-          <Button type="submit" className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2.5">
+          <Button type="submit" className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2.5">
             <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
             Log In
           </Button>
@@ -132,7 +132,7 @@ export default function LoginForm() {
         <div className="text-center">
           <p className="text-gray-900">
             {"Don't have an account? "}
-            <Link href="/signup" className="text-green-500 hover:text-green-600 font-medium hover:underline">
+            <Link href="/signup" className="text-yellow-500 hover:text-yellow-600 font-medium hover:underline">
               Sign Up
             </Link>
           </p>

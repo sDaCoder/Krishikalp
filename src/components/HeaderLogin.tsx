@@ -45,7 +45,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3">
           <Link href="/signup">
-            <Button className="bg-green-500 hover:bg-green-600 text-white rounded-2xl cursor-pointer">
+            <Button className="bg-amber-900 hover:bg-amber-900/90 text-white rounded-2xl cursor-pointer">
               <FontAwesomeIcon icon={faUserPlus} className="h-4 w-4" />
               Sign Up
             </Button>

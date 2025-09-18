@@ -1,137 +1,66 @@
 "use client"
-import { motion } from "motion/react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-  faEnvelope,
-  faPhone,
-  faLocationDot,
-  faMessage,
-  faLeaf,
-  faPaperPlane
-} from "@fortawesome/free-solid-svg-icons"
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-import { Textarea } from "../ui/textarea"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { Label } from "../ui/label"
+import { useState } from "react"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
+import { CheckCircle, XCircle } from "lucide-react"
 
-export default function Contact() {
+export default function ContactPage() {
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = () => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+
+      const success = Math.random() > 0.5
+
+      if (success) {
+        toast.success("Message sent successfully!", {
+          duration: 3000,
+          icon: <CheckCircle className="text-green-500" />,
+        })
+      } else {
+        toast.error("Failed to send message!", {
+          duration: 3000,
+          icon: <XCircle className="text-red-500" />,
+        })
+      }
+    }, 1000)
+  }
+
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-amber-50 to-white px-8 py-16">
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="max-w-4xl w-full text-center"
-      >
-        {/* Heading */}
-        <h1 className="text-4xl md:text-5xl font-bold text-primary mb-6 flex items-center justify-center gap-3">
-          <FontAwesomeIcon icon={faMessage} className="h-8 w-8 text-primary" />
-          Contact Us
-        </h1>
+    <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="flex items-center justify-center bg-amber-50">
+        <Card className="w-full max-w-md bg-white border-amber-300 shadow-lg">
+          <CardHeader>
+            <CardTitle className="text-amber-600 text-xl font-semibold">Contact Us</CardTitle>
+            <CardDescription className="text-amber-700">
+              We'd love to hear from you! Fill out the form below and we’ll get back to you shortly.
+            </CardDescription>
+          </CardHeader>
 
-        <p className="text-lg text-gray-700 leading-relaxed mb-12">
-          Have questions or suggestions? We’d love to hear from you!
-          Reach out to us anytime and we’ll get back as soon as possible.
-        </p>
+          <CardContent className="space-y-4">
+            <Input placeholder="Your Name" className="border-amber-300 focus:ring-amber-400" />
+            <Input placeholder="Your Email" className="border-amber-300 focus:ring-amber-400" />
+            <Textarea placeholder="Your Message" className="border-amber-300 focus:ring-amber-400" rows={4} />
+          </CardContent>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-200">
-            <CardHeader>
-              <CardTitle>
-                <div className="flex items-center justify-center space-x-2">
-                  <FontAwesomeIcon icon={faLeaf} className="h-8 w-8 text-sidebar-accent" />
-                  <span className="text-xl font-bold text-sidebar-foreground">Contact Us</span>
-                </div>
-                <CardDescription className="text-sm text-muted-foreground font-light">
-                  We usually respond in 1-2 business days.
-                </CardDescription>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <motion.form
-                whileHover={{ scale: 1.001 }}
-                className="flex flex-col gap-y-6"
-              >
-                <div className="grid gap-1">
-                  <Label className="text-sm text-muted-foreground">Name</Label>
-                  <Input
-                    type="text"
-                    placeholder="Your Name"
-                    className="caret-primary bg-background rounded-lg border border-text-foreground focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    required
-                  />
-                </div>
-                <div className="grid gap-1">
-                  <Label className="text-sm text-muted-foreground">Email</Label>
-                  <Input
-                    type="email"
-                    placeholder="Your Email"
-                    className="caret-primary bg-background rounded-lg border border-text-foreground focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    required
-                  />
-                </div>
-                <div className="grid gap-1">
-                  <Label className="text-sm text-muted-foreground">Message</Label>
-                  <Textarea
-                    placeholder="Your Message"
-                    rows={5}
-                    className="caret-primary min-h-[140px] bg-background rounded-lg border-text-foreground focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    required
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  className="font-semibold transition"
-                >
-                  <motion.span whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.2 }}>
-                    <FontAwesomeIcon icon={faPaperPlane} />
-                  </motion.span>
-                  Send Message
-                </Button>
-              </motion.form>
-            </CardContent>
-          </Card>
-          {/* Contact Info */}
-          <div className="flex flex-col gap-6">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="p-5 bg-amber-100 rounded-xl shadow-md flex items-center gap-4"
+          <CardFooter className="flex justify-end">
+            <Button
+              className="bg-amber-500 hover:bg-amber-600 text-white rounded-lg"
             >
-              <FontAwesomeIcon
-                icon={faEnvelope}
-                className="h-6 w-6 text-amber-700"
-              />
-              <span className="text-gray-700">support@KrishiKalp.com</span>
-            </motion.div>
+              Send Message
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
 
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="p-5 bg-amber-100 rounded-xl shadow-md flex items-center gap-4"
-            >
-              <FontAwesomeIcon
-                icon={faPhone}
-                className="h-6 w-6 text-amber-700"
-              />
-              <span className="text-gray-700">+91 9064926904</span>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="p-5 bg-amber-100 rounded-xl shadow-md flex items-center gap-4"
-            >
-              <FontAwesomeIcon
-                icon={faLocationDot}
-                className="h-6 w-6 text-amber-700"
-              />
-              <span className="text-gray-700">
-                Kolkata, West Bengal, India
-              </span>
-            </motion.div>
-          </div>
-        </div>
-      </motion.div>
-    </section>
+      <div className="hidden md:block relative">
+        <img src="/wheat-2391348.jpg" alt="Image" className="object-fill h-full w-full" />
+      </div>
+    </div>
   )
 }

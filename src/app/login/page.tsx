@@ -19,7 +19,7 @@ export default async function page() {
     <div className="relative min-h-screen flex items-center justify-center">
       <video
         className="absolute top-0 left-0 w-full h-full object-cover"
-        src="/windmill-in-flower-field.3840x2160.mp4"
+        src="/pixel-sunset-lake.3840x2160.mp4"
         autoPlay
         loop
         muted

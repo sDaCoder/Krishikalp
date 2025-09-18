@@ -9,7 +9,7 @@ export default function HelpButton() {
   const pathname = usePathname()
 
   const isAuthPage =
-    pathname.startsWith("/login") || pathname.startsWith("/signup")
+    pathname.startsWith("/signup")
 
   return (
     <>
