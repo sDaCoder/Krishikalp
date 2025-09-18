@@ -2,6 +2,7 @@
 import { useState } from "react"
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts"
 import SearchPage from "@/components/WeatherPage/SearchPage"
+import TemperatureGraph from "../TemperatureGraph/TemperatureGraph"
 
 // Types for weather data used by this page
 interface WeatherDay {
@@ -18,16 +19,26 @@ interface WeatherInfo {
   daily: WeatherDay[]
 }
 
+// Exported type for the temperature chart data points
+export interface ChartDataPoint {
+  date: string
+  temp: number
+  tempMax: number
+  tempMin: number
+}
+
 export default function WeatherPage() {
   const [weatherInfo, setWeatherInfo] = useState<WeatherInfo | null>(null)
 
   // Prepare chart data
-  const chartData = weatherInfo?.daily?.map((day: WeatherDay) => ({
+  const chartData: ChartDataPoint[] = weatherInfo?.daily?.map((day: WeatherDay) => ({
     date: new Date(day.date).toLocaleDateString("en-US", { weekday: "short" }),
     temp: day.temp,
     tempMax: day.tempMax,
     tempMin: day.tempMin,
   })) || []
+  console.log(chartData);
+
 
   // Function to generate sowing/harvesting advice
   const getSowingHarvestAdvice = (weatherInfo: WeatherInfo): string[] => {
@@ -128,7 +139,7 @@ export default function WeatherPage() {
           }}
         >
           {/* Temperature graph */}
-          <div style={{ flex: "1 1 400px", background: "rgba(255,255,255,0.9)", padding: "1rem", borderRadius: "12px", boxShadow: "2px 2px 8px rgba(0,0,0,0.1)" }}>
+          {/* <div style={{ flex: "1 1 400px", background: "rgba(255,255,255,0.9)", padding: "1rem", borderRadius: "12px", boxShadow: "2px 2px 8px rgba(0,0,0,0.1)" }}>
             <h3 style={{ textAlign: "center", color: "#5c3d2e", marginBottom: "1rem" }}>Temperature Graph</h3>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={chartData}>
@@ -141,7 +152,8 @@ export default function WeatherPage() {
                 <Line type="monotone" dataKey="tempMin" stroke="#a86f52" strokeWidth={2} strokeDasharray="3 3" />
               </LineChart>
             </ResponsiveContainer>
-          </div>
+          </div> */}
+          <TemperatureGraph chartData={chartData} />
 
           {/* Sowing & Harvesting Advice */}
           <div style={{ flex: "1 1 300px", background: "rgba(255,248,240,0.95)", padding: "1rem", borderRadius: "12px", boxShadow: "2px 2px 8px rgba(0,0,0,0.1)" }}>
