@@ -21,7 +21,7 @@ export default function Navbar() {
             whileHover={{ scale: 1.05 }}
             className="transform-gpu will-change-transform"
             >
-            <Link href="/" className="text-white hover:text-green-400 transition">
+            <Link href="/" className="text-white hover:text-yellow-200 transition">
                 Home
             </Link>
             </motion.div>
@@ -29,15 +29,15 @@ export default function Navbar() {
             whileHover={{ scale: 1.05 }}
             className="transform-gpu will-change-transform"
             >
-            <Link href="/about" className="text-white hover:text-green-400 transition">
-                About
+            <Link href="/about" className="text-white hover:text-yellow-200 transition">
+                Features
             </Link>
             </motion.div>
             <motion.div 
             whileHover={{ scale: 1.05 }}
             className="transform-gpu will-change-transform"
             >
-            <Link href="/contact" className="text-white hover:text-green-400 transition">
+            <Link href="/contact" className="text-white hover:text-yellow-200 transition">
                 Contact
             </Link>
             </motion.div>

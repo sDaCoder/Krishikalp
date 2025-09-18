@@ -30,7 +30,7 @@ export default function Navbar() {
             className="transform-gpu will-change-transform"
             >
             <Link href="/about" className="text-white hover:text-green-400 transition">
-                About
+                Features
             </Link>
             </motion.div>
             <motion.div 

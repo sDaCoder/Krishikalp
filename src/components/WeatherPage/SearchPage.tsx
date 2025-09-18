@@ -1,10 +1,9 @@
 "use client"
 import { useState } from "react"
-import TextField from "@mui/material/TextField"
-import Button from "@mui/material/Button"
-import SendIcon from "@mui/icons-material/Send"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Send } from "lucide-react"
 
-// Types aligned with WeatherPage usage
 interface WeatherDay {
   date: string
   temp: number
@@ -19,7 +18,6 @@ interface WeatherInfo {
   daily: WeatherDay[]
 }
 
-// Minimal subset of OpenWeather 5-day/3-hour forecast response we use
 interface OpenWeatherItem {
   dt_txt: string
   main: {
@@ -69,7 +67,6 @@ export default function SearchPage({ updateInfo }: SearchPageProps) {
         return
       }
 
-      // Group forecast by date
       const dailyForecast: Record<string, OpenWeatherItem[]> = {}
       data.list.forEach((item: OpenWeatherItem) => {
         const date = item.dt_txt.split(" ")[0]
@@ -77,14 +74,13 @@ export default function SearchPage({ updateInfo }: SearchPageProps) {
         dailyForecast[date].push(item)
       })
 
-      // Pick one representative per day
       const daily: WeatherDay[] = Object.keys(dailyForecast).map((date) => {
         const midday = dailyForecast[date][4] || dailyForecast[date][0]
         return {
           date,
           temp: midday.main.temp,
-          tempMin: Math.min(...dailyForecast[date].map((i: OpenWeatherItem) => i.main.temp_min)),
-          tempMax: Math.max(...dailyForecast[date].map((i: OpenWeatherItem) => i.main.temp_max)),
+          tempMin: Math.min(...dailyForecast[date].map((i) => i.main.temp_min)),
+          tempMax: Math.max(...dailyForecast[date].map((i) => i.main.temp_max)),
           humidity: midday.main.humidity,
           weather: midday.weather[0].description,
         }
@@ -100,17 +96,29 @@ export default function SearchPage({ updateInfo }: SearchPageProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
-      <TextField
-        label="City"
+    <form
+      onSubmit={handleSubmit}
+      className="flex items-center gap-2 mb-4"
+    >
+      <Input
         value={city}
-        onChange={(e) => setCity(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setCity(e.target.value)
+        }
+        placeholder="Enter city"
         required
+        className="h-8 w-52 text-sm border-amber-500"
       />
-      <Button type="submit" variant="contained" endIcon={<SendIcon />} disabled={loading}>
+      <Button
+        type="submit"
+        variant="outline"
+        disabled={loading}
+        className="h-8 px-3 text-sm flex items-center gap-1 cursor-pointer"
+      >
         {loading ? "Searching..." : "Search"}
+        {!loading && <Send className="w-4 h-4" />}
       </Button>
-      {error && <p style={{ color: "red", marginTop: "0.5rem" }}>⚠ {error}</p>}
+      {error && <p className="text-red-500 text-sm ml-2">⚠ {error}</p>}
     </form>
   )
 }

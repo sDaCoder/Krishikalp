@@ -50,7 +50,7 @@ const Header: React.FC = () => {
             }}
             className="cursor-pointer text-lg transform-gpu will-change-transform hover:text-yellow-100"
           >
-            About
+            Features
           </motion.div>
           <motion.div
             whileHover={{ scale: 1.05 }}
