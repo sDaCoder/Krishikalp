@@ -43,11 +43,19 @@ interface WeatherInfo {
   daily: WeatherDay[];
 }
 
+// Exported type for the temperature chart data points
+export interface ChartDataPoint {
+  date: string;
+  temp: number;
+  tempMax: number;
+  tempMin: number;
+}
+
 export default function WeatherPage() {
   const [weatherInfo, setWeatherInfo] = useState<WeatherInfo | null>(null);
 
-  // Chart Data
-  const chartData =
+  // Prepare chart data
+  const chartData: ChartDataPoint[] =
     weatherInfo?.daily?.map((day: WeatherDay) => ({
       date: new Date(day.date).toLocaleDateString("en-US", {
         weekday: "short",
@@ -89,7 +97,7 @@ export default function WeatherPage() {
         WEATHER ADVISORY DASHBOARD
       </h1>
 
-      {/* Search Input (centered, same width as old button) */}
+      {/* Search Input */}
       <div className="flex flex-col items-center gap-3 mb-6">
         <SearchPage updateInfo={setWeatherInfo} />
       </div>
@@ -162,7 +170,10 @@ export default function WeatherPage() {
             <Card className="bg-white border border-amber-300 shadow-md rounded-xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-amber-600">
-                  <FontAwesomeIcon icon={faChartLine} className="text-amber-500" />
+                  <FontAwesomeIcon
+                    icon={faChartLine}
+                    className="text-amber-500"
+                  />
                   Past Week Temperature
                 </CardTitle>
               </CardHeader>
@@ -202,7 +213,10 @@ export default function WeatherPage() {
             <Card className="bg-white border border-amber-300 shadow-md rounded-xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-amber-600">
-                  <FontAwesomeIcon icon={faSeedling} className="text-green-600" />
+                  <FontAwesomeIcon
+                    icon={faSeedling}
+                    className="text-green-600"
+                  />
                   Sowing & Harvesting Advice
                 </CardTitle>
               </CardHeader>
